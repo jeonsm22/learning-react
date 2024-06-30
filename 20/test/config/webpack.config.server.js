@@ -9,7 +9,7 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
+const env = getClientEnvironment(paths.publicUrlOrPath);
 
 module.exports = {
   mode: "production", // 프로덕션 모드로 설정하여 최적화 옵션들을 활성화
@@ -76,19 +76,6 @@ module.exports = {
           },
           // CSS Module을 위한 처리
           {
-            test: cssRegex,
-            exclude: cssModuleRegex,
-            // exportOnlyLocals: true 옵션을 설정해야 실제 css 파일을 생성하지 않습니다.
-            loader: require.resolve("css-loader"),
-            options: {
-              importLoaders: 1,
-              modules: {
-                exportOnlyLocals: true,
-              },
-            },
-          },
-          // CSS Module을 위한 처리
-          {
             test: cssModuleRegex,
             loader: require.resolve("css-loader"),
             options: {
@@ -136,7 +123,7 @@ module.exports = {
           },
           // url-loader를 위한 설정
           {
-            test: [/\.bmp$/, /\.gif$/, /\.kpe?g$/, /\.png$/],
+            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
             loader: require.resolve("resolve-url-loader"),
             options: {
               emitFile: false, // 파일을 따로 저장하지 않는 옵션
